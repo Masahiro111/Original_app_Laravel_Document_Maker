@@ -14,13 +14,14 @@ class BookController extends Controller
 
         $converter = new GithubFlavoredMarkdownConverter();
         // echo $converter->convertToHtml('# Hello World!');
+        // $md_data = file_get_contents('https://raw.githubusercontent.com/laravel-ja/ja-docs-8.x/master/translation-ja/installation.md');
 
         $books =  FileContent::all();
 
         foreach ($books as $book) {
-            $book->contents_article =  $converter->convertToHtml($book->contents_article);
+            // dd($book->contents_url);
+            $book->contents_article =  $converter->convertToHtml(file_get_contents($book->contents_url));
         }
-
         return view('books.index', compact('books'));
     }
 }
